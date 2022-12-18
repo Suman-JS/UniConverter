@@ -1,9 +1,11 @@
 package com.rocky.uniconvertor;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,26 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed () {
+        AlertDialog.Builder builder = new AlertDialog.Builder (this);
+        builder.setMessage ("Are You Sure?").setCancelable (false).setPositiveButton ("Yes", new DialogInterface.OnClickListener () {
+            @Override
+            public void onClick (DialogInterface dialog, int i) {
+//                finish ();
+                MainActivity.super.onBackPressed ();
+            }
+        })
+                .setNegativeButton ("No", new DialogInterface.OnClickListener () {
+                    @Override
+                    public void onClick (DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create ();
+        alertDialog.show ();
+    }
+
+    @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_main);
@@ -34,11 +56,12 @@ public class MainActivity extends AppCompatActivity {
                     String s = editText.getText ().toString ();
                     int kg = Integer.parseInt (s);
                     double pound = 2.205 * kg;
-                    textView.setText ("The Value In Pound Is : "+ pound);
+                    textView.setText ("The Value In Pound Is : " + pound);
                 } catch (Exception e) {
                     Toast.makeText (MainActivity.this, "Please Enter A Value", Toast.LENGTH_SHORT).show ();
                 }
             }
         });
+
     }
 }
