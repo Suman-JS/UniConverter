@@ -27,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage ("Are You Sure?").setCancelable (false).setPositiveButton ("Yes", new DialogInterface.OnClickListener () {
             @Override
             public void onClick (DialogInterface dialog, int i) {
-//                finish ();
                 MainActivity.super.onBackPressed ();
+                MainActivity.this.finish ();
+                System.exit (0);
             }
         })
                 .setNegativeButton ("No", new DialogInterface.OnClickListener () {
